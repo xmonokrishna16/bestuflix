@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BestuFlix - Watch Your Favorite Shows</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #E50914;
+            --primary-hover: #b80710;
+            --bg-dark: #141414;
+            --card-bg: #1f1f1f;
+            --card-hover-bg: #2a2a2a;
+            --text-main: #FFFFFF;
+            --text-muted: #AAAAAA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Top Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-brand {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.2rem;
+            color: var(--primary-red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .avatar-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #E50914, #ff5757);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            min-height: 420px;
+            background: linear-gradient(to top, var(--bg-dark) 0%, rgba(20, 20, 20, 0.4) 60%, rgba(20, 20, 20, 0.8) 100%),
+                radial-gradient(circle at center, #2e1012 0%, #141414 70%);
+            display: flex;
+            align-items: flex-end;
+            padding: 0 4% 50px;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background-color: rgba(229, 9, 20, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.15;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 24px;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--primary-red);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 28px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.35);
+        }
+
+        .hero-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
+        }
+
+        /* Content Showcase Rows */
+        .content-container {
+            padding: 0 4% 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--primary-red);
+            padding-left: 12px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .episode-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Grid layout */
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        /* Episode Card */
+        .episode-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .episode-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            background-color: var(--card-hover-bg);
+            border-color: rgba(229, 9, 20, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .card-thumbnail {
+            width: 100%;
+            height: 125px;
+            background: linear-gradient(135deg, #2b2b2b, #181818);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-overlay {
+            width: 44px;
+            height: 44px;
+            background-color: rgba(229, 9, 20, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .episode-card:hover .play-overlay {
+            transform: scale(1.15);
+            background-color: var(--primary-red);
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.75);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-bonus {
+            background-color: rgba(229, 9, 20, 0.85);
+        }
+
+        .card-details {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .episode-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .watch-cta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: #0d0d0d;
+        }
+
+        footer span {
+            color: var(--primary-red);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .hero {
+                padding-bottom: 30px;
+                min-height: 360px;
+            }
+
+            .episodes-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .card-thumbnail {
+                height: 100px;
+            }
+
+            .card-details {
+                padding: 10px;
+            }
+
+            .episode-name {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand">BestuFlix</a>
+        <div class="nav-user">
+            <span>Created with S❤️K </span>
+            <div class="avatar-icon">B</div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">Specially For Bestu</span>
+            <h1 class="hero-title">Unlimited Laughter & Drama</h1>
+            <p class="hero-desc">Your personal binge-watch lounge with all your favorite episodes in one place for "Miss
+                Teri toh".</p>
+            <a href="#kapil-show" class="hero-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+                Start Watching
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Showcase -->
+    <main class="content-container">
+
+        <!-- Section 1: The Great Indian Kapil Show -->
+        <section id="kapil-show">
+            <div class="section-header">
+                <h2 class="section-title">The Great Indian Kapil Show (Season 4)</h2>
+                <span class="episode-count">15 Episodes</span>
+            </div>
+            <div class="episodes-grid" id="kapil-grid"></div>
+        </section>
+
+        <!-- Section 2: India's Got Latent -->
+        <section id="latent-show">
+            <div class="section-header">
+                <h2 class="section-title">India’s Got Latent (Season 2)</h2>
+                <span class="episode-count">4 Episodes</span>
+            </div>
+            <div class="episodes-grid" id="latent-grid"></div>
+        </section>
+
+        <!-- Section 3: India's Got Latent Bonus Clips -->
+        <section id="latent-bonus">
+            <div class="section-header">
+                <h2 class="section-title">India’s Got Latent (Season 2) — Bonus Clips</h2>
+                <span class="episode-count">2 Bonus Clips</span>
+            </div>
+            <div class="episodes-grid" id="latent-bonus-grid"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Handcrafted for my Best Friend <span>❤️</span> | Hosted on BestuFlix</p>
+    </footer>
+
+    <script>
+        // Data list of all shows & links
+        const kapilEpisodes = [
+            { ep: "Episode 01", url: "https://hubcloud.cx/drive/toxiqhodvvtvwwa" },
+            { ep: "Episode 02", url: "https://hubcloud.cx/drive/44zspspvenxswvn" },
+            { ep: "Episode 03", url: "https://hubcloud.cx/drive/dsyk0dyu7egqtud" },
+            { ep: "Episode 04", url: "https://hubcloud.cx/drive/1dfpddmzrhd1had" },
+            { ep: "Episode 05", url: "https://hubcloud.cx/drive/gnkn7gjnlxs5tj1" },
+            { ep: "Episode 06", url: "https://hubcloud.cx/drive/cf4ch1c14cb9sbz" },
+            { ep: "Episode 07", url: "https://hubcloud.cx/drive/2y6yyn766jww7x6" },
+            { ep: "Episode 08", url: "https://hubcloud.cx/drive/7dwk1wjs7eedawa" },
+            { ep: "Episode 09", url: "https://hubcloud.cx/drive/9jhsvi6kmghgvvh" },
+            { ep: "Episode 10", url: "https://hubcloud.cx/drive/rgsmjug66r1jmsd" },
+            { ep: "Episode 11", url: "https://hubcloud.cx/drive/h8vlksvb7azrohk" },
+            { ep: "Episode 12", url: "https://hubcloud.cx/drive/m2f7q12fymeeypm" },
+            { ep: "Episode 13", url: "https://hubcloud.cx/drive/dubnw4fc33cn1eu" },
+            { ep: "Episode 14", url: "https://hubcloud.cx/drive/qczwtmllmuwgsts" },
+            { ep: "Episode 15", url: "https://hubcloud.cx/drive/ikybsycpyhtxiif" }
+        ];
+
+        const latentEpisodes = [
+            { ep: "Episode 1", url: "https://hubcloud.cx/drive/wyx1fcdqdxov1l1" },
+            { ep: "Episode 2", url: "https://hubcloud.cx/drive/hyhgpp5gppufgeg" },
+            { ep: "Episode 3", url: "https://hubcloud.cx/drive/rrrbwwzek1bv63o" },
+            { ep: "Episode 4", url: "https://hubcloud.cx/drive/i272crineua643r" }
+        ];
+
+        const latentBonus = [
+            { ep: "Episode 1 Bonus Clip", url: "https://hubcloud.cx/drive/wcdewkzadte0d0i" },
+            { ep: "Episode 2 Bonus Clip", url: "https://hubcloud.cx/drive/33r3cibxczoxiox" }
+        ];
+
+        // Helper function to create cards
+        function renderCards(data, containerId, badgeText, isBonus = false) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = data.map(item => `
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="episode-card">
+          <div class="card-thumbnail">
+            <span class="badge ${isBonus ? 'badge-bonus' : ''}">${badgeText}</span>
+            <div class="play-overlay">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="card-details">
+            <div class="episode-name">${item.ep}</div>
+            <div class="watch-cta">
+              Watch Now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+      `).join('');
+        }
+
+        // Render all rows
+        renderCards(kapilEpisodes, 'kapil-grid', 'S4');
+        renderCards(latentEpisodes, 'latent-grid', 'S2');
+        renderCards(latentBonus, 'latent-bonus-grid', 'Bonus', true);
+    </script>
+</body>
+
+</html>
