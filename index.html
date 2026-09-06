@@ -454,6 +454,15 @@
             <div class="episodes-grid" id="latent-bonus-grid"></div>
         </section>
 
+        <!-- Section 4: Indian Game Show Season 2 -->
+        <section id="indian-game-show-season-2">
+            <div class="section-header">
+                <h2 class="section-title">Indian Game Show (Season 2)</h2>
+                <span class="episode-count">11 Episodes</span>
+            </div>
+            <div class="episodes-grid" id="indian-game-show-season-2-grid"></div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -493,6 +502,20 @@
             { ep: "Episode 2 Bonus Clip", url: "https://hubcloud.cx/drive/33r3cibxczoxiox" }
         ];
 
+        const indianGameShowSeason2Episodes = [
+            { ep: "Episode 1", url: "https://hubcloud.cx/drive/imqa37gqicgq3dw" },
+            { ep: "Episode 2", url: "https://hubcloud.cx/drive/rduvf12b81u11wu" },
+            { ep: "Episode 3", url: "https://hubcloud.cx/drive/y11ahqntn5eosan" },
+            { ep: "Episode 4", url: "https://hubcloud.cx/drive/mndnrykwlwwrkrz" },
+            { ep: "Episode 5", url: "https://hubcloud.cx/drive/7yvqvhrglvyhdvy" },
+            { ep: "Episode 6", url: "https://hubcloud.cx/drive/velnv2ed1t22eve" },
+            { ep: "Episode 7", url: "https://hubcloud.cx/drive/60rbd5smq61issi" },
+            { ep: "Episode 8", url: "https://hubcloud.cx/drive/n6wckct1nofkuqk" },
+            { ep: "Episode 9", url: "https://hubcloud.cx/drive/e8ss2tutwuwrtwo" },
+            { ep: "Episode 10", url: "https://hubcloud.cx/drive/j441fxw5zlz633h" },
+            { ep: "Episode 11", url: "https://hubcloud.cx/drive/3y73gp1fdtjpsjq" }
+        ];
+
         // Helper function to create cards
         function renderCards(data, containerId, badgeText, isBonus = false) {
             const container = document.getElementById(containerId);
@@ -523,6 +546,7 @@
         renderCards(kapilEpisodes, 'kapil-grid', 'S4');
         renderCards(latentEpisodes, 'latent-grid', 'S2');
         renderCards(latentBonus, 'latent-bonus-grid', 'Bonus', true);
+        renderCards(indianGameShowSeason2Episodes, 'indian-game-show-season-2-grid', 'S2');
     </script>
 </body>
 
